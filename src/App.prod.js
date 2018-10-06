@@ -7,6 +7,8 @@ import createHistory from 'history/createBrowserHistory';
 
 import ApiClient from 'shared/apiClient';
 import clientMiddleware from 'shared/middleware/clientMiddleware';
+import {theme} from "./shared/theme";
+import {routes} from "./shared/routes";
 
 
 class App extends React.Component {
@@ -32,10 +34,12 @@ class App extends React.Component {
     const store = createStore(browserHistory);
     syncHistoryWithStore(browserHistory, store);
 
+    theme();
+
     return (
       <Provider store={store}>
         <div>
-          {/* ROUTES */}
+          {routes({history: browserHistory})}
         </div>
       </Provider>
     )
