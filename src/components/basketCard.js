@@ -4,16 +4,19 @@ import {Flex, Box} from "@rebass/grid";
 import { colors } from '../shared/theme';
 import Sparklines from "./sparklines";
 import Subheading from "./subheading";
-import Text from './text';
 import styled from "styled-components";
 
 export default class BasketCard extends React.Component {
+  handleClick(){
+    this.props.onClick()
+  }
+
   render(){
-    const {prices, basket} = this.props;
+    const {basket} = this.props;
 
     return (
       <CardContainer  width={[1, 1/3]} my={1} mt={[3, 0]}>
-        <Card p={2} m={[2]} w={1}>
+        <Card p={2} m={[2]} w={1} onClick={this.handleClick.bind(this)}>
           <Flex flexWrap={'wrap'}  css={{height: '100%', position: 'relative'}} w={1} >
             <Box w={1/2} mt={'0.25em'} ml={'0.25em'} px={'auto'}>
               <Subheading>{basket.name}</Subheading>
@@ -23,7 +26,7 @@ export default class BasketCard extends React.Component {
               width: '100%',
               position: 'absolute',
               bottom: 0,
-              top: '3em',
+              top: '2.5em',
               left: 0,
               right: 0
             }}>
@@ -72,6 +75,7 @@ const Card = Box.extend`
   &:hover {
     box-shadow: 0 4.5px 20px rgba(0,0,0,.15);
     transform: translate3d(0,-1.5px,0);
+    cursor: pointer;
   }
 `;
 
