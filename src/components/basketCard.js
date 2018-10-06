@@ -13,13 +13,10 @@ export default class BasketCard extends React.Component {
 
     return (
       <CardContainer  width={[1, 1/3]} my={1}>
-        <Card p={1} m={[2]} w={1}>
+        <Card p={2} m={[2]} w={1}>
           <Flex flexWrap={'wrap'}  css={{height: '100%', position: 'relative'}} w={1} >
             <Box w={1/2} mt={'0.25em'} ml={'0.25em'}>
               <Subheading>{basket.name}</Subheading>
-            </Box>
-            <Box ml={'auto'} mt={'0.25em'}>
-              <Delta value={basket.weekly_percent_change}>% {basket.weekly_percent_change}</Delta>
             </Box>
             <Box w={1} flex={1} css={{
               height: '6.5em',
@@ -32,8 +29,15 @@ export default class BasketCard extends React.Component {
             }}>
               <Sparklines data={this.props.prices} colors={basket.colors} id={basket.id}/>
             </Box>
-            <Box mt={'8em'} w={7/8} p={2} css={{textAlign: 'center'}}>
+            <Box mt={'8em'} w={1} p={2} css={{textAlign: 'center'}} mb={3}>
               {basket.description}
+            </Box>
+            <Box w={1/5} ml={'auto'} mt={2} css={{
+              position: 'absolute',
+              bottom: '0.5em',
+              right: '0.25em'
+            }}>
+              <Delta value={basket.weekly_percent_change}>% {basket.weekly_percent_change}</Delta>
             </Box>
           </Flex>
         </Card>
@@ -43,7 +47,10 @@ export default class BasketCard extends React.Component {
 }
 
 const Delta = styled(Text)`
-  color: ${props => props.value >= 0 ? 'green' : 'red'}
+  color: white
+  padding: 0.5em;
+  border-radius: 3px;
+  background-color: ${props => props.value >= 0 ? 'green' : 'red'}
 `;
 
 const Card = Box.extend`
