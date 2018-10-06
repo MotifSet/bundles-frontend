@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { extent as d3ArrayExtent } from 'd3-array';
 import {
   scaleLinear as d3ScaleLinear,
@@ -54,15 +55,14 @@ export default class Sparklines extends React.Component {
         style={{display: 'block', marginLeft: 'auto', marginRight: 'auto'}}
       >
         <g>
-          <path d={linePath} fill={"transparent"} stroke={colors[0]} strokeWidth={2}/>
+          <path d={linePath} fill={"transparent"} stroke={'white'} strokeWidth={3}/>
           <path d={areaPath} fill={`url(#areaGradient${id}`}/>
         </g>
         <defs>
           <linearGradient id={`areaGradient${id}`} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
-            <stop offset={0} stopColor={colors[1]} stopOpacity={0.6}></stop>
-            <stop offset={0.2} stopColor={colors[2]} stopOpacity={0.2}></stop>
+            <stop offset={0} stopColor={'white'} stopOpacity={0.6}></stop>
+            <stop offset={0.2} stopColor={'white'} stopOpacity={0.2}></stop>
             <stop offset={0.3} stopColor={'white'} stopOpacity={0.0}></stop>
-            <stop offset={1} stopColor={'white'} stopOpacity={0.0}></stop>
           </linearGradient>
         </defs>
       </svg>
@@ -70,8 +70,15 @@ export default class Sparklines extends React.Component {
   }
 
   render(){
+    const {colors} = this.props;
+    const divStyle = {
+      background: `linear-gradient(30deg, ${colors[0]}, ${colors[1]} 50%, ${colors[2]})`,
+      width: '100%',
+      height: '100%',
+      paddingTop: '1em'
+    };
     return (
-      <div ref={this.containerRef} style={{height: '100%', width: '100%'}}>
+      <div ref={this.containerRef} style={divStyle}>
         {this.state.containerDimensions && this.props.data && this.renderSvg.bind(this)()}
       </div>
     )

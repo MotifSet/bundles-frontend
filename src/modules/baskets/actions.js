@@ -28,7 +28,7 @@ export function fetchBaskets(){
           weekly_percent_change: 1.87,
           components: [],
           description: 'A collection of crypto assets and predictions regarding the investments of a16z crypto.',
-          colors: ['#bc4e9c', '#bc4e9c', '#f80759'],
+          colors: ['#0cebeb', '#20e3b2', '#29ffc6'],
           price_eth: 0.13,
           price_fiat: 29.04
         },
@@ -39,7 +39,7 @@ export function fetchBaskets(){
           weekly_percent_change: 0.37,
           components: [],
           description: 'A group of tokens created in Asia and predictions regarding their future',
-          colors: ['#0cebeb', '#20e3b2', '#29ffc6'],
+          colors: ['#bc4e9c', '#bc4e9c', '#f80759'],
           price_eth: 0.13,
           price_fiat: 29.04
         },

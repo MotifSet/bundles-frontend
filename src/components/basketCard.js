@@ -22,7 +22,7 @@ export default class BasketCard extends React.Component {
               <Delta value={basket.weekly_percent_change}>% {basket.weekly_percent_change}</Delta>
             </Box>
             <Box w={1} flex={1} css={{
-              height: '100%',
+              height: '6.5em',
               width: '100%',
               position: 'absolute',
               bottom: 0,
@@ -31,6 +31,9 @@ export default class BasketCard extends React.Component {
               right: 0
             }}>
               <Sparklines data={this.props.prices} colors={basket.colors} id={basket.id}/>
+            </Box>
+            <Box mt={'8em'} w={7/8} p={2} css={{textAlign: 'center'}}>
+              {basket.description}
             </Box>
           </Flex>
         </Card>
@@ -58,5 +61,5 @@ const Card = Box.extend`
 `;
 
 const CardContainer = Box.extend`
-  height: 10em;
+  height: auto;
 `;
