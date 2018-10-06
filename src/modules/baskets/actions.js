@@ -17,7 +17,7 @@ export function fetchBaskets(){
           weekly_percent_change: -0.87,
           components: [],
           description: 'The Black Swan Basket consists of predictions and erc20 tokens that are considered low success probability, but high reward.',
-          colors: ['#0F2027', '#203A43', '#2C5364'],
+          colors: ['#005C97', '#363795', '#363795'],
           price_eth: 0.13,
           price_fiat: 29.04
         },
@@ -28,7 +28,7 @@ export function fetchBaskets(){
           weekly_percent_change: 1.87,
           components: [],
           description: 'A collection of crypto assets and predictions regarding the investments of a16z crypto.',
-          colors: ['#bc4e9c', '#bc4e9c', '#f80759'],
+          colors: ['#005C97', '#363795', '#363795'],
           price_eth: 0.13,
           price_fiat: 29.04
         },
@@ -39,7 +39,7 @@ export function fetchBaskets(){
           weekly_percent_change: 0.37,
           components: [],
           description: 'A group of tokens created in Asia and predictions regarding their future',
-          colors: ['#0cebeb', '#20e3b2', '#29ffc6'],
+          colors: ['#005C97', '#363795', '#363795'],
           price_eth: 0.13,
           price_fiat: 29.04
         },

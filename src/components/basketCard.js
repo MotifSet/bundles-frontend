@@ -12,14 +12,11 @@ export default class BasketCard extends React.Component {
     const {prices, basket} = this.props;
 
     return (
-      <CardContainer  width={[1, 1/3]} my={1}>
-        <Card p={1} m={[2]} w={1}>
+      <CardContainer  width={[1, 1/3]} my={1} mt={[3, 0]}>
+        <Card p={2} m={[2]} w={1}>
           <Flex flexWrap={'wrap'}  css={{height: '100%', position: 'relative'}} w={1} >
-            <Box w={1/2} mt={'0.25em'} ml={'0.25em'}>
+            <Box w={1/2} mt={'0.25em'} ml={'0.25em'} px={'auto'}>
               <Subheading>{basket.name}</Subheading>
-            </Box>
-            <Box ml={'auto'} mt={'0.25em'}>
-              <Delta value={basket.weekly_percent_change}>% {basket.weekly_percent_change}</Delta>
             </Box>
             <Box w={1} flex={1} css={{
               height: '100%',
@@ -32,6 +29,15 @@ export default class BasketCard extends React.Component {
             }}>
               <Sparklines data={this.props.prices} colors={basket.colors} id={basket.id}/>
             </Box>
+            <Box width={1} css={{textAlign: 'center'}} mt={'10.5em'}>
+              {basket.description}
+            </Box>
+            <Box w={1/6} ml={'auto'}>
+              <Delta pl={'1em'} value={basket.weekly_percent_change}>
+                <span style={{marginTop: '0.4em'}}>1m</span>
+                <DeltaPill value={basket.weekly_percent_change} p={2}>% {basket.weekly_percent_change}</DeltaPill>
+              </Delta>
+            </Box>
           </Flex>
         </Card>
       </CardContainer>
@@ -39,8 +45,20 @@ export default class BasketCard extends React.Component {
   }
 }
 
-const Delta = styled(Text)`
-  color: ${props => props.value >= 0 ? 'green' : 'red'}
+const Delta = styled(Flex)`
+  border-radius: 4px;
+  justify-content: center;
+  color: white;
+  background-color: ${props => props.value > 0 ? 'rgb(38, 156, 85)' : 'rgb(219, 50, 67)'};
+`;
+
+const DeltaPill = styled(Box)`
+  background-color: ${props => props.value > 0 ? 'rgb(43, 177, 96)' : 'rgb(223, 72, 87)'};
+  margin-left: 1em;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  border-radius: 2px;
 `;
 
 const Card = Box.extend`
@@ -58,5 +76,5 @@ const Card = Box.extend`
 `;
 
 const CardContainer = Box.extend`
-  height: 10em;
+  height: auto;
 `;
