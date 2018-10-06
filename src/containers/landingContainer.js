@@ -6,7 +6,9 @@ import * as basketActions from '../modules/baskets/actions';
 import * as priceActions from '../modules/prices/actions';
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    prices: state.prices.prices
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

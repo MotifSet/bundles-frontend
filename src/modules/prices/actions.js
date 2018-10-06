@@ -9,16 +9,16 @@ export function fetchPriceHistory(id){
   // mocked for now
   const week_ago = moment().subtract(7, 'days').toISOString();
   const now = moment().toISOString();
-  const interval = 30 * 60; // 30 minutes
+  const interval = 2* 60 * 60; // 2 hours
   const keyName = 'price';
   const mockDataParams = {
     from: week_ago,
     until: now,
     interval,
-    keyName
+    keyName,
   };
   return {
     type: FETCH_PRICE_HISTORY_SUCCESS,
-    payload: {[id]: new Series(mockDataParams).sin()}
+    payload: {[id]: new Series(mockDataParams).gaussian()}
   }
 }

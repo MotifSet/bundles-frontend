@@ -1,15 +1,30 @@
 import React from 'react';
-import styled from 'styled-components';
-import {Box} from "@rebass/grid";
+import {Flex, Box} from "@rebass/grid";
 
 import { colors } from '../shared/theme';
+import Sparklines from "./sparklines";
 
 export default class BasketCard extends React.Component {
   render(){
     return (
       <CardContainer  width={[1, 1/3]} my={1}>
-        <Card p={1} m={[2]}>
-          Hello!
+        <Card p={1} m={[2]} w={1}>
+          <Flex flexWrap={'wrap'} css={{height: '100%', position: 'relative'}} w={1} >
+            <Box>
+              Hello!
+            </Box>
+            <Box w={1} flex={1} css={{
+              height: '100%',
+              width: '100%',
+              position: 'relative',
+              bottom: 0,
+              top: '2em',
+              left: 0,
+              right: 0
+            }}>
+              <Sparklines data={this.props.prices}/>
+            </Box>
+          </Flex>
         </Card>
       </CardContainer>
     )

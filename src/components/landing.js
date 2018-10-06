@@ -24,7 +24,7 @@ export default class Landing extends React.Component {
           </ColorBlock>
           <Box px={3} mt={[0, -5]}>
             <Flex mx={'auto'} css={{maxWidth: '1024px'}} flexWrap={'wrap'}>
-              <BasketCard/>
+              <BasketCard prices={this.props.prices["1"]}/>
               <BasketCard/>
               <BasketCard/>
             </Flex>
