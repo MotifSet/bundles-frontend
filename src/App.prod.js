@@ -9,9 +9,16 @@ import ApiClient from 'shared/apiClient';
 import clientMiddleware from 'shared/middleware/clientMiddleware';
 import {theme} from "./shared/theme";
 import {routes} from "./shared/routes";
+import {SetProtocolModule} from "./shared/utils";
 
 
 class App extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.setProtocolModule = new SetProtocolModule();
+  }
+
   render() {
     const createStore = (history) => {
       const client = new ApiClient();
