@@ -3,6 +3,9 @@ import {Flex, Box} from "@rebass/grid";
 
 import { colors } from '../shared/theme';
 import Sparklines from "./sparklines";
+import Subheading from "./subheading";
+import Text from './text';
+import styled from "styled-components";
 
 export default class BasketCard extends React.Component {
   render(){
@@ -12,15 +15,18 @@ export default class BasketCard extends React.Component {
       <CardContainer  width={[1, 1/3]} my={1}>
         <Card p={1} m={[2]} w={1}>
           <Flex flexWrap={'wrap'}  css={{height: '100%', position: 'relative'}} w={1} >
-            <Box>
-              Hello!
+            <Box w={1/2} mt={'0.25em'} ml={'0.25em'}>
+              <Subheading>{basket.name}</Subheading>
+            </Box>
+            <Box ml={'auto'} mt={'0.25em'}>
+              <Delta value={basket.weekly_percent_change}>% {basket.weekly_percent_change}</Delta>
             </Box>
             <Box w={1} flex={1} css={{
               height: '100%',
               width: '100%',
               position: 'absolute',
               bottom: 0,
-              top: '2em',
+              top: '3em',
               left: 0,
               right: 0
             }}>
@@ -32,6 +38,10 @@ export default class BasketCard extends React.Component {
     )
   }
 }
+
+const Delta = styled(Text)`
+  color: ${props => props.value >= 0 ? 'green' : 'red'}
+`;
 
 const Card = Box.extend`
   height: 100%;
