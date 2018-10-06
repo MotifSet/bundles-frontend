@@ -6,6 +6,10 @@ import Text from "./text";
 import BasketCard from "./basketCard";
 
 export default class Landing extends React.Component {
+  componentDidMount(){
+    this.props.onMount();
+  }
+
   render(){
     return (
       <React.Fragment>
