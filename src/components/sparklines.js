@@ -25,7 +25,7 @@ export default class Sparklines extends React.Component {
   }
 
   renderSvg(){
-    const {data, colors} = this.props;
+    const {data, colors, id} = this.props;
     const {width, height} = this.state.containerDimensions;
 
     const xSelect = x => new Date(x.timestamp);
@@ -55,13 +55,14 @@ export default class Sparklines extends React.Component {
       >
         <g>
           <path d={linePath} fill={"transparent"} stroke={colors[0]} strokeWidth={2}/>
-          <path d={areaPath} fill={'url(#areaGradient)'}/>
+          <path d={areaPath} fill={`url(#areaGradient${id}`}/>
         </g>
         <defs>
-          <linearGradient id={'areaGradient'} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
-            <stop offset={0} stopColor={colors[1]} stopOpacity={0.2}></stop>
+          <linearGradient id={`areaGradient${id}`} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
+            <stop offset={0} stopColor={colors[1]} stopOpacity={0.6}></stop>
             <stop offset={0.2} stopColor={colors[2]} stopOpacity={0.2}></stop>
-            <stop offset={0.4} stopColor={'white'} stopOpacity={0.0}></stop>
+            <stop offset={0.3} stopColor={'white'} stopOpacity={0.0}></stop>
+            <stop offset={1} stopColor={'white'} stopOpacity={0.0}></stop>
           </linearGradient>
         </defs>
       </svg>

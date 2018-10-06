@@ -24,7 +24,7 @@ export default class BasketCard extends React.Component {
               left: 0,
               right: 0
             }}>
-              <Sparklines data={this.props.prices} colors={basket.colors}/>
+              <Sparklines data={this.props.prices} colors={basket.colors} id={basket.id}/>
             </Box>
           </Flex>
         </Card>
