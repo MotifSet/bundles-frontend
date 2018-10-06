@@ -4,7 +4,7 @@ import {
   scaleLinear as d3ScaleLinear,
   scaleTime as d3ScaleTime
 } from 'd3-scale';
-import { line as d3Line } from 'd3-shape';
+import { line as d3Line, area as d3Area } from 'd3-shape';
 
 export default class Sparklines extends React.Component {
   constructor(props){
@@ -12,7 +12,7 @@ export default class Sparklines extends React.Component {
     this.containerRef = React.createRef();
     this.state = {
       containerDimensions: null
-    }
+    };
   }
 
   componentDidMount(){
@@ -25,7 +25,7 @@ export default class Sparklines extends React.Component {
   }
 
   renderSvg(){
-    const {data} = this.props;
+    const {data, colors} = this.props;
     const {width, height} = this.state.containerDimensions;
 
     const xSelect = x => new Date(x.timestamp);
@@ -45,6 +45,7 @@ export default class Sparklines extends React.Component {
 
     const sparkline = d3Line().x(selectScaledX).y(selectScaledY);
     const linePath = sparkline(data);
+    const areaPath = d3Area().x(d => xScale(new Date(d.timestamp))).y0(yScale(0)).y1(d => yScale(d.price))(data);
 
     return (
       <svg
@@ -52,7 +53,17 @@ export default class Sparklines extends React.Component {
         width={width}
         style={{display: 'block', marginLeft: 'auto', marginRight: 'auto'}}
       >
-        <g><path d={linePath}></path></g>
+        <g>
+          <path d={linePath} fill={"transparent"} stroke={colors[0]} strokeWidth={2}/>
+          <path d={areaPath} fill={'url(#areaGradient)'}/>
+        </g>
+        <defs>
+          <linearGradient id={'areaGradient'} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
+            <stop offset={0} stopColor={colors[1]} stopOpacity={0.2}></stop>
+            <stop offset={0.2} stopColor={colors[2]} stopOpacity={0.2}></stop>
+            <stop offset={0.4} stopColor={'white'} stopOpacity={0.0}></stop>
+          </linearGradient>
+        </defs>
       </svg>
     )
   }

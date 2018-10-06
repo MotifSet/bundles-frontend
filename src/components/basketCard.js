@@ -6,23 +6,25 @@ import Sparklines from "./sparklines";
 
 export default class BasketCard extends React.Component {
   render(){
+    const {prices, basket} = this.props;
+
     return (
       <CardContainer  width={[1, 1/3]} my={1}>
         <Card p={1} m={[2]} w={1}>
-          <Flex flexWrap={'wrap'} css={{height: '100%', position: 'relative'}} w={1} >
+          <Flex flexWrap={'wrap'}  css={{height: '100%', position: 'relative'}} w={1} >
             <Box>
               Hello!
             </Box>
             <Box w={1} flex={1} css={{
               height: '100%',
               width: '100%',
-              position: 'relative',
+              position: 'absolute',
               bottom: 0,
               top: '2em',
               left: 0,
               right: 0
             }}>
-              <Sparklines data={this.props.prices}/>
+              <Sparklines data={this.props.prices} colors={basket.colors}/>
             </Box>
           </Flex>
         </Card>

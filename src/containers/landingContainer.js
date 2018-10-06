@@ -7,7 +7,8 @@ import * as priceActions from '../modules/prices/actions';
 
 const mapStateToProps = (state) => {
   return {
-    prices: state.prices.prices
+    prices: state.prices.prices,
+    baskets: state.baskets.baskets || []
   };
 };
 
