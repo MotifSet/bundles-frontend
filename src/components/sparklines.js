@@ -4,6 +4,10 @@ import {
   scaleLinear as d3ScaleLinear,
   scaleTime as d3ScaleTime
 } from 'd3-scale';
+import {
+  axisBottom as d3AxisBottom,
+} from 'd3-axis';
+import { select as d3Select } from 'd3-selection';
 import { line as d3Line, area as d3Area } from 'd3-shape';
 
 import { colors } from '../shared/theme';
@@ -12,6 +16,7 @@ export default class Sparklines extends React.Component {
   constructor(props){
     super(props);
     this.containerRef = React.createRef();
+    this.xAxisRef = React.createRef();
     this.state = {
       containerDimensions: null
     };
@@ -28,8 +33,15 @@ export default class Sparklines extends React.Component {
     this.props.onOffsetReceived && this.props.onOffsetReceived({height: this.containerRef.current.offsetHeight*.8})
   }
 
+  componentDidUpdate(oldProps, oldState){
+    if(!oldState.containerDimensions && this.state.containerDimensions && this.props.data){
+      this.renderSvg();
+      setTimeout(()=>{this.renderSvg()}, 0); // dirty hack to make the xAxis render by forcing a refresh
+    }
+  }
+
   renderSvg(){
-    const {data, id} = this.props;
+    const {data, id, showAxis} = this.props;
     const {width, height} = this.state.containerDimensions;
 
     const xSelect = x => new Date(x.date);
@@ -50,6 +62,13 @@ export default class Sparklines extends React.Component {
     const sparkline = d3Line().x(selectScaledX).y(selectScaledY);
     const linePath = sparkline(data);
     const areaPath = d3Area().x(d => xScale(new Date(d.date))).y0(yScale(0)).y1(d => yScale(d.price))(data);
+    const xAxis = d3AxisBottom()
+      .scale(xScale)
+      .ticks(data.length/3);
+
+    if (this.xAxisRef.current){
+      d3Select(this.xAxisRef.current).call(xAxis);
+    }
 
     const positive = data[0].price < data[data.length-1].price;
 
@@ -63,6 +82,11 @@ export default class Sparklines extends React.Component {
           <path d={linePath} fill={"transparent"} stroke={positive ? colors.darkGreen : colors.darkRed} strokeWidth={2}/>
           <path d={areaPath} fill={`url(#areaGradient${id}`}/>
         </g>
+        {showAxis && (
+          <React.Fragment>
+            <g className="xAxis" style={{transform: `translateY(${(height/2)*.877}px)`}} ref={this.xAxisRef}></g>
+          </React.Fragment>
+        )}
         <defs>
           <linearGradient id={`areaGradient${id}`} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
             <stop offset={0} stopColor={positive ? colors.darkGreen : colors.darkRed} stopOpacity={0.5}></stop>
@@ -76,7 +100,7 @@ export default class Sparklines extends React.Component {
 
   render(){
     return (
-      <div ref={this.containerRef} style={{height: '100%', width: '100%'}}>
+      <div ref={this.containerRef} style={{height: '100%', width: '100%', marginTop: '1em'}}>
         {this.state.containerDimensions && this.props.data && this.renderSvg.bind(this)()}
       </div>
     )

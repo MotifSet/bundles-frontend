@@ -52,7 +52,7 @@ export default class BasketDetail extends React.Component{
               right: 0,
               maxWidth: '1024px'
             }}>
-              <Sparklines data={prices} id={basket.symbol} onOffsetReceived={({height}) => this.setState({graphOffset: height})}/>
+              <Sparklines showAxis={true} data={prices} id={basket.symbol} onOffsetReceived={({height}) => this.setState({graphOffset: height})}/>
             </Box>
 
             <Box mx={[2, 'auto']}
