@@ -45,5 +45,7 @@ const FullFlex = Flex.extend`
 const ColorBlock = Box.extend`
   height: 45%;
   color: white;
-  background: linear-gradient(180deg, #a73737 0%, rgba(255, 255, 255, 0) 100%), #7a2828;
+  background: linear-gradient(180deg, ${colors.brand1} 0%, rgba(255, 255, 255, 0) 100%), ${colors.brand2};
+  border-radius: 0 0 50% 50% / 15%;
+
 `;

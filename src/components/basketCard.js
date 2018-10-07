@@ -5,6 +5,7 @@ import { colors } from '../shared/theme';
 import Sparklines from "./sparklines";
 import Subheading from "./subheading";
 import styled from "styled-components";
+import Text from "./text";
 
 export default class BasketCard extends React.Component {
   handleClick(){
@@ -41,6 +42,9 @@ export default class BasketCard extends React.Component {
             <Box width={1} css={{textAlign: 'center'}} mt={'10.5em'}>
               {basket.description}
             </Box>
+            <Box w={1/6} my={'auto'}>
+              <Text fontSize={'24px'} fontWeight={'bold'}>${basket.price.toFixed(2)}</Text>
+            </Box>
             <Box w={1/6} ml={'auto'}>
               <Delta pl={'1em'} value={basket.weekly_percent_change}>
                 <span style={{marginTop: '0.4em'}}>30d</span>
@@ -58,12 +62,12 @@ const Delta = styled(Flex)`
   border-radius: 4px;
   justify-content: center;
   color: white;
-  background-color: ${props => props.value > 0 ? 'rgb(38, 156, 85)' : 'rgb(219, 50, 67)'};
+  background-color: ${props => props.value > 0 ? `${colors.darkGreen}` : `${colors.darkRed}`};
 `;
 
 const DeltaPill = styled(Box)`
-  background-color: ${props => props.value > 0 ? 'rgb(43, 177, 96)' : 'rgb(223, 72, 87)'};
-  margin-left: 1em;
+  background-color: ${props => props.value > 0 ? `${colors.lightGreen}` : `${colors.lightRed}`};
+  margin-left: 1em; 
   margin-top: 0;
   margin-right: 0;
   margin-bottom: 0;
@@ -72,7 +76,9 @@ const DeltaPill = styled(Box)`
 
 const Card = Box.extend`
   height: 100%;
-  background-color: ${colors.white};
+  background-color: ${colors.cardBG};
+  border: 1px solid ${colors.cardBorder};
+  border-radius: 4px;
   z-index: 2;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
   
