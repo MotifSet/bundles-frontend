@@ -12,7 +12,12 @@ const pricesRoutes = {
   detail: (symbol) => buildRoute(`services?symbol=${symbol}`)
 }
 
+const orderRoutes = {
+  create: () => buildRoute('broadcast')
+}
+
 export const routes = {
   baskets: basketRoutes,
-  prices: pricesRoutes
+  prices: pricesRoutes,
+  orders: orderRoutes
 };

@@ -48,6 +48,8 @@ export default class Sparklines extends React.Component {
     const {data, id, showAxis} = this.props;
     const {width, height} = this.state.containerDimensions;
 
+    if(!data) return;
+
     const xSelect = x => new Date(x.date);
     const ySelect = y => y.price;
 

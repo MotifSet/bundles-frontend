@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "0x.js": "1.0.8",
+    "@0xproject/web3-wrapper": "3.0.3",
     "@rebass/grid": "6.0.0-4",
-    "bignumber.js": "4.1.0",
+    "bignumber.js": "7.2.1",
     "d3": "5.7.0",
+    "ethers": "4.0.4",
     "moment": "2.22.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
@@ -16,15 +19,14 @@
     "redux": "4.0.0",
     "redux-form": "7.4.2",
     "redux-thunk": "2.3.0",
-    "setprotocol.js": "1.0.4-rc.5",
     "styled-components": "3.4.9",
     "superagent": "4.0.0-beta.5",
-    "web3": "0.20.7"
+    "web3-provider-engine": "14.1.0"
   },
   "scripts": {
-    "deploy": "react-scripts build && cd build && surge --domain https://primotif.surge.sh",
+    "deploy": "react-scripts --max_old_space_size=4096 build && cd build && surge --domain https://primotif.surge.sh",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

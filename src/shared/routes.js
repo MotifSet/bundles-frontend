@@ -8,6 +8,7 @@ export const routes = ({history}) => (
   <Router history={history}>
     <Switch>
       <Route path={'/baskets/:id/'} component={BasketDetailContainer}/>
+      {/*<Route path={'/baskets/:id/:tradeType'} component={()=>'shit'}/>*/}
       <Route path={'/'} component={LandingContainer} />
     </Switch>
   </Router>

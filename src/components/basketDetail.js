@@ -28,8 +28,12 @@ export default class BasketDetail extends React.Component{
     this.props.onBack();
   }
 
+  handleBuyButtonClick(){
+    this.props.onBuyButtonClick();
+  }
+
   render(){
-    const {basket, loading, prices, balance, web3Enabled, web3Loading, validNetwork} = this.props;
+    const {basket, loading, prices, balance, web3Enabled, web3Loading, validNetwork, ordered} = this.props;
 
     let monthly_percent_change;
     if(prices){
@@ -51,7 +55,9 @@ export default class BasketDetail extends React.Component{
                 <Heading>{basket.name}</Heading>
                 <Text>{SYMBOL_DESCRIPTION_MAP[basket.symbol]}</Text>
                 <Box width={1} mt={3}>
-                  <BuyButton>Buy Now</BuyButton>
+                  <BuyButton onClick={this.handleBuyButtonClick.bind(this)}>
+                    {web3Loading.order ? "Buying..." : ordered ? "Bought!" : "Buy Now"}
+                  </BuyButton>
                   <DefaultButton onClick={this.handleBackButtonClick.bind(this)}>Back to Listings</DefaultButton>
                 </Box>
               </Card>

@@ -18,6 +18,7 @@ const mapStateToProps = (state, ownProps) => {
     basket,
     balance: state.web3.balance,
     web3Loading: state.web3.loading,
+    ordered: state.web3.ordered,
     web3Enabled: !!window.__WEB3_PROVIDER__.injectedWeb3,
     validNetwork: window.__WEB3_PROVIDER__.validNetwork()
   };
@@ -31,8 +32,11 @@ const mapDispatchToProps = (dispatch) => {
     },
     onBack: () => {
       dispatch(push('/'))
+    },
+    onBuyButtonClick: () => {
+      dispatch(web3Actions.createOrder());
     }
-  }
+  };
 };
 
 export default withRouter(connect(

@@ -1,6 +1,4 @@
-import SetProtocol from 'setprotocol.js';
-import * as Web3 from 'web3';
-import BigNumber from 'bignumber.js';
+// import SetProtocol from 'setprotocol.js';
 
 export class Web3Module{
   constructor(){
@@ -23,7 +21,7 @@ export class Web3Module{
     };
 
     // Instantiate setProtocol instance
-    this.setProtocol = new SetProtocol(this.provider, config);
+    // this.setProtocol = new SetProtocol(this.provider, config);
 
     // Store the user's address for ease
     this.address = this.injectedWeb3.eth.accounts[0];
