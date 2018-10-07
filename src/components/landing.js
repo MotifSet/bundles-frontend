@@ -25,7 +25,7 @@ export default class Landing extends React.Component {
             </Flex>
           </ColorBlock>
           <Box px={3} css={{backgroundColor: colors.bg}}>
-            <Flex mx={'auto'} css={{maxWidth: '1024px'}} flexWrap={'wrap'} mt={[0, -5]}>
+            <Flex mx={'auto'} css={{maxWidth: '1024px'}} flexWrap={'wrap'} mt={[2, -4]}>
               {Object.keys(baskets).map((b) => (
                 <BasketCard key={b} prices={prices[baskets[b].symbol]} basket={baskets[b]} onClick={this.props.onBasketClick(b)}/>
               ))}

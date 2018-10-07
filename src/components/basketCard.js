@@ -4,7 +4,8 @@ import {Flex, Box} from "@rebass/grid";
 import { colors } from '../shared/theme';
 import Sparklines from "./sparklines";
 import Subheading from "./subheading";
-import styled from "styled-components";
+import {Delta, DeltaPill} from "./delta";
+
 import Text from "./text";
 
 export default class BasketCard extends React.Component {
@@ -64,22 +65,6 @@ export default class BasketCard extends React.Component {
     )
   }
 }
-
-const Delta = styled(Flex)`
-  border-radius: 4px;
-  justify-content: center;
-  color: white;
-  background-color: ${props => props.value >= 0 ? `${colors.darkGreen}` : `${colors.darkRed}`};
-`;
-
-const DeltaPill = styled(Box)`
-  background-color: ${props => props.value >= 0 ? `${colors.lightGreen}` : `${colors.lightRed}`};
-  margin-left: 1em; 
-  margin-top: 0;
-  margin-right: 0;
-  margin-bottom: 0;
-  border-radius: 2px;
-`;
 
 const Card = Box.extend`
   height: 100%;

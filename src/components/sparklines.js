@@ -31,12 +31,12 @@ export default class Sparklines extends React.Component {
     });
 
     this.props.onOffsetReceived && this.props.onOffsetReceived({height: this.containerRef.current.offsetHeight*.8})
+    setTimeout(this.renderSvg.bind(this), 150); // dirty hack to make the xAxis render by forcing a refresh
   }
 
   componentDidUpdate(oldProps, oldState){
     if(!oldState.containerDimensions && this.state.containerDimensions && this.props.data){
       this.renderSvg();
-      setTimeout(()=>{this.renderSvg()}, 0); // dirty hack to make the xAxis render by forcing a refresh
     }
   }
 
@@ -74,7 +74,7 @@ export default class Sparklines extends React.Component {
 
     return (
       <svg
-        height={height/2}
+        height={(height/2)*1.25}
         width={width}
         style={{display: 'block', marginLeft: 'auto', marginRight: 'auto'}}
       >
@@ -84,7 +84,7 @@ export default class Sparklines extends React.Component {
         </g>
         {showAxis && (
           <React.Fragment>
-            <g className="xAxis" style={{transform: `translateY(${(height/2)*.877}px)`}} ref={this.xAxisRef}></g>
+            <g className="xAxis" style={{transform: `translateY(${(height/2)}px)`}} ref={this.xAxisRef}></g>
           </React.Fragment>
         )}
         <defs>
