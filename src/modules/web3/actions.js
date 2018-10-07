@@ -84,6 +84,10 @@ export function createOrder(){
         types: [CREATE_ORDER, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAILURE],
         promise: (client) => {
           return client.post(routes.orders.create(), {data: signedOrder})
+            .then((r) => {
+              dispatch(getBalance(window.__WEB3_PROVIDER__.address));
+              return r
+            })
         }
       })
     });
