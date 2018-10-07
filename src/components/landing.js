@@ -19,15 +19,15 @@ export default class Landing extends React.Component {
           <ColorBlock width={1} p={2}>
             <Flex>
               <Box pt={[4,5]} mx={'auto'} css={{textAlign: 'center'}}>
-                <Heading>Buy and sell predictions</Heading>
-                <Text>Auguries introduce the ability to trade baskets of Augur predictions</Text>
+                <Heading>The easiest way to invest in global markets</Heading>
+                <Text>Primotif allows you to participate in any market, anywhere</Text>
               </Box>
             </Flex>
           </ColorBlock>
-          <Box px={3} mt={[0, -5]}>
-            <Flex mx={'auto'} css={{maxWidth: '1024px'}} flexWrap={'wrap'}>
-              {baskets.map((b) => (
-                <BasketCard key={b.id} prices={prices[b.id]} basket={b}/>
+          <Box px={3} css={{backgroundColor: colors.bg}}>
+            <Flex mx={'auto'} css={{maxWidth: '1024px'}} flexWrap={'wrap'} mt={[2, -4]}>
+              {Object.keys(baskets).map((b) => (
+                <BasketCard key={b} prices={prices[baskets[b].symbol]} basket={baskets[b]} onClick={this.props.onBasketClick(b)}/>
               ))}
             </Flex>
           </Box>
@@ -43,6 +43,9 @@ const FullFlex = Flex.extend`
 `;
 
 const ColorBlock = Box.extend`
-  height: 40%;
-  background-color: ${colors.primary};
+  height: 45%;
+  color: white;
+  background: linear-gradient(180deg, ${colors.brand1} 0%, rgba(255, 255, 255, 0) 100%), ${colors.brand2};
+  border-radius: 0 0 50% 50% / 15%;
+
 `;

@@ -4,18 +4,36 @@ import {Flex, Box} from "@rebass/grid";
 import { colors } from '../shared/theme';
 import Sparklines from "./sparklines";
 import Subheading from "./subheading";
-import Text from './text';
-import styled from "styled-components";
+import {Delta, DeltaPill} from "./delta";
+
+import Text from "./text";
 
 export default class BasketCard extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      graphOffset: '10em'
+    };
+  }
+
+  handleClick(){
+    this.props.onClick()
+  }
+
   render(){
-    const {prices, basket} = this.props;
+    const {basket, prices} = this.props;
+
+    let monthly_percent_change;
+    if(prices){
+      monthly_percent_change = (prices[prices.length-1].price - prices[0].price)/prices[0].price;
+      monthly_percent_change = monthly_percent_change.toFixed(2);
+    }
 
     return (
-      <CardContainer  width={[1, 1/3]} my={1}>
-        <Card p={2} m={[2]} w={1}>
+      <CardContainer  width={[1, 1/3]} my={1} mt={3}>
+        <Card p={2} m={[2]} w={1} onClick={this.handleClick.bind(this)}>
           <Flex flexWrap={'wrap'}  css={{height: '100%', position: 'relative'}} w={1} >
-            <Box w={1/2} mt={'0.25em'} ml={'0.25em'}>
+            <Box w={1/2} mt={'0.25em'} ml={'0.25em'} px={'auto'}>
               <Subheading>{basket.name}</Subheading>
             </Box>
             <Box w={1} flex={1} css={{
@@ -23,21 +41,23 @@ export default class BasketCard extends React.Component {
               width: '100%',
               position: 'absolute',
               bottom: 0,
-              top: '3em',
+              top: '2.5em',
               left: 0,
               right: 0
             }}>
-              <Sparklines data={this.props.prices} colors={basket.colors} id={basket.id}/>
+              <Sparklines data={prices} id={basket.symbol} onOffsetReceived={({height}) => this.setState({graphOffset: height})}/>
             </Box>
-            <Box mt={'8em'} w={1} p={2} css={{textAlign: 'center'}} mb={3}>
+            <Box width={1} css={{textAlign: 'center'}} mt={this.state.graphOffset}>
               {basket.description}
             </Box>
-            <Box w={1/5} ml={'auto'} mt={2} css={{
-              position: 'absolute',
-              bottom: '0.5em',
-              right: '0.25em'
-            }}>
-              <Delta value={basket.weekly_percent_change}>% {basket.weekly_percent_change}</Delta>
+            <Box w={1/6} my={'auto'}>
+              <Text fontSize={'24px'} fontWeight={'bold'}>${basket.price.toFixed(2)}</Text>
+            </Box>
+            <Box w={1/6} ml={'auto'}>
+              <Delta pl={'1em'} value={monthly_percent_change}>
+                <span style={{marginTop: '0.4em'}}>30d</span>
+                <DeltaPill value={monthly_percent_change} p={2}>% {monthly_percent_change}</DeltaPill>
+              </Delta>
             </Box>
           </Flex>
         </Card>
@@ -46,16 +66,11 @@ export default class BasketCard extends React.Component {
   }
 }
 
-const Delta = styled(Text)`
-  color: white
-  padding: 0.5em;
-  border-radius: 3px;
-  background-color: ${props => props.value >= 0 ? 'green' : 'red'}
-`;
-
 const Card = Box.extend`
   height: 100%;
-  background-color: ${colors.white};
+  background-color: ${colors.cardBG};
+  border: 1px solid ${colors.cardBorder};
+  border-radius: 4px;
   z-index: 2;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
   
@@ -64,6 +79,7 @@ const Card = Box.extend`
   &:hover {
     box-shadow: 0 4.5px 20px rgba(0,0,0,.15);
     transform: translate3d(0,-1.5px,0);
+    cursor: pointer;
   }
 `;
 

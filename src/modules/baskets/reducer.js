@@ -6,7 +6,7 @@ import {
 
 function initialState(){
   return {
-    baskets: [],
+    baskets: {},
     loading: {
       baskets: true
     }
@@ -19,7 +19,7 @@ export default function reducer(state=initialState(), action={}){
       return {
         ...state,
         loading: {...state.loading, baskets: false},
-        baskets: [...action.payload]
+        baskets: {...action.payload}
       };
     default:
       return state;

@@ -22,6 +22,7 @@
     "web3": "0.20.7"
   },
   "scripts": {
+    "deploy": "react-scripts build && cd build && surge --domain https://primotif.surge.sh",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
