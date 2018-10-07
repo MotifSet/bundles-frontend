@@ -7,8 +7,17 @@ import {colors} from "../shared/theme";
 import Text from "./text";
 import Link from './link';
 import {BuyButton} from "./button";
+import Sparklines from "./sparklines";
 
 export default class BasketDetail extends React.Component{
+  constructor(props){
+    super(props);
+
+    this.state = {
+      graphOffset: '10em' // until we know the true offset, let's guess
+    }
+  }
+
   componentDidMount(){
     this.props.onMount();
   }
@@ -18,7 +27,7 @@ export default class BasketDetail extends React.Component{
   }
 
   render(){
-    const {basket, loading} = this.props;
+    const {basket, loading, prices} = this.props;
 
     return (
       <React.Fragment>
@@ -27,16 +36,28 @@ export default class BasketDetail extends React.Component{
             <h3>Loading...</h3>
           </FullScreenLoading>
         ) : (
-          <FullFlex width={1} flexDirection={'column'}>
+          <FullFlex w={1} flexDirection={'column'} css={{position: 'relative'}} flexWrap={'wrap'}>
             <Box pt={[3,4]} mx={'auto'}>
               <Subheading>{basket.name}</Subheading>
             </Box>
-            <Box>
-              price chart
+            <Box w={1} flex={1} css={{
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              height: '30%',
+              width: '100%',
+              position: 'absolute',
+              bottom: 0,
+              top: '2.5em',
+              left: 0,
+              right: 0,
+              maxWidth: '1024px'
+            }}>
+              <Sparklines data={prices} id={basket.symbol} onOffsetReceived={({height}) => this.setState({graphOffset: height})}/>
             </Box>
 
             <Box mx={[2, 'auto']}
-                 my={2}
+                 mt={this.state.graphOffset}
+                 mb={2}
               css={{
                 maxWidth: '1024px',
                 border: `2px solid ${colors.cardBorder}`,

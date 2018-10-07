@@ -8,6 +8,13 @@ import styled from "styled-components";
 import Text from "./text";
 
 export default class BasketCard extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      graphOffset: '10em'
+    };
+  }
+
   handleClick(){
     this.props.onClick()
   }
@@ -37,9 +44,9 @@ export default class BasketCard extends React.Component {
               left: 0,
               right: 0
             }}>
-              <Sparklines data={prices} colors={basket.colors} id={basket.symbol}/>
+              <Sparklines data={prices} id={basket.symbol} onOffsetReceived={({height}) => this.setState({graphOffset: height})}/>
             </Box>
-            <Box width={1} css={{textAlign: 'center'}} mt={'10.5em'}>
+            <Box width={1} css={{textAlign: 'center'}} mt={this.state.graphOffset}>
               {basket.description}
             </Box>
             <Box w={1/6} my={'auto'}>

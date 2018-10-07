@@ -24,6 +24,8 @@ export default class Sparklines extends React.Component {
         height: this.containerRef.current.offsetHeight
       }
     });
+
+    this.props.onOffsetReceived && this.props.onOffsetReceived({height: this.containerRef.current.offsetHeight*.8})
   }
 
   renderSvg(){
