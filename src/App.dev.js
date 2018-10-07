@@ -10,14 +10,13 @@ import DevTools from 'components/devTools';
 import clientMiddleware from 'shared/middleware/clientMiddleware';
 import { theme } from 'shared/theme';
 import {routes} from "./shared/routes";
-import {initializeWeb3, SetProtocolModule} from "./shared/utils";
+import {initializeWeb3, SetProtocolModule, Web3Module} from "./shared/utils";
 
 
 class App extends React.Component {
   constructor(props){
     super(props);
-
-    this.setProtocolModule = new SetProtocolModule();
+    window.__WEB3_PROVIDER__ = new Web3Module();
   }
 
   render() {

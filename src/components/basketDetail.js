@@ -21,7 +21,7 @@ export default class BasketDetail extends React.Component{
   }
 
   componentDidMount(){
-    this.props.onMount();
+    this.props.onMount(this.props.basket.address);
   }
 
   handleBackButtonClick(){
@@ -29,7 +29,7 @@ export default class BasketDetail extends React.Component{
   }
 
   render(){
-    const {basket, loading, prices} = this.props;
+    const {basket, loading, prices, balance, web3Enabled, web3Loading, validNetwork} = this.props;
 
     let monthly_percent_change;
     if(prices){
@@ -58,7 +58,15 @@ export default class BasketDetail extends React.Component{
             </Box>
             <Box width={[1, 1/2]} p={1}>
               <Card width={1} p={2} mt={3}>
-                Check
+                {!web3Enabled ? (
+                  <Text>Enable web3 to see your balances</Text>
+                ) : !validNetwork ? (
+                  <Text>Switch your web3 network to Kovan to see your balances</Text>
+                ) : balance === 0 || web3Loading.balance ? (
+                  <Text>You currently don't own any {basket.symbol}. You should buy some!</Text>
+                ) : (
+                  <Text>You currently have {balance} {basket.symbol}.</Text>
+                )}
               </Card>
             </Box>
             <Box width={1} p={1}>

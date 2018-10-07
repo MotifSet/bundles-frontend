@@ -32,7 +32,10 @@ export default class Sparklines extends React.Component {
     });
 
     this.props.onOffsetReceived && this.props.onOffsetReceived({height: this.containerRef.current.offsetHeight*.8})
-    setTimeout(this.renderSvg.bind(this), 150); // dirty hack to make the xAxis render by forcing a refresh
+
+    if(this.props.showAxis){
+      setTimeout(this.renderSvg.bind(this), 250); // dirty hack to make the xAxis render by forcing a refresh
+    }
   }
 
   componentDidUpdate(oldProps, oldState){

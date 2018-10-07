@@ -2,15 +2,16 @@ import SetProtocol from 'setprotocol.js';
 import * as Web3 from 'web3';
 import BigNumber from 'bignumber.js';
 
-export class SetProtocolModule{
+export class Web3Module{
   constructor(){
-    const injectedWeb3 = window.web3 || undefined;
+    this.injectedWeb3 = window.web3 || undefined;
     try {
       // Use MetaMask/Mist provider
-      this.provider = injectedWeb3.currentProvider;
+      this.provider = this.injectedWeb3.currentProvider;
     } catch (err) {
       // Throws when user doesn't have MetaMask/Mist running
       throw new Error(`No injected web3 found when initializing setProtocol: ${err}`);
+      return;
     }
 
     const config = {
@@ -25,11 +26,70 @@ export class SetProtocolModule{
     this.setProtocol = new SetProtocol(this.provider, config);
 
     // Store the user's address for ease
-    injectedWeb3.eth.getAccounts((err, accounts)=>{
-      if(err){
-        throw new Error(err)
+    this.address = this.injectedWeb3.eth.accounts[0];
+  }
+
+  /*
+   * Ensure the user is on Kovan
+   */
+  validNetwork(){
+    switch(this.injectedWeb3.version.network){
+      case '42':
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /*
+   * Return the balance of a token whose contract is at the given address
+   */
+  getBalanceForAddress(addr){
+
+    // The minimum ABI to get ERC20 Token balance
+    let minABI = [
+      // balanceOf
+      {
+        "constant":true,
+        "inputs":[{"name":"_owner","type":"address"}],
+        "name":"balanceOf",
+        "outputs":[{"name":"balance","type":"uint256"}],
+        "type":"function"
+      },
+      // decimals
+      {
+        "constant":true,
+        "inputs":[],
+        "name":"decimals",
+        "outputs":[{"name":"","type":"uint8"}],
+        "type":"function"
       }
-      this.address = accounts[0];
-    })
+    ];
+
+    // Get ERC20 Token contract instance
+    let contract = this.injectedWeb3.eth.contract(minABI).at(addr);
+    let promise = new Promise((resolve, reject) => {
+      // Call balanceOf function
+      contract.balanceOf(this.address, (error, balance) => {
+        if (error){
+          console.error(error)
+          reject(0)
+        }
+        // Get decimals
+        contract.decimals((error, decimals) => {
+          if (error){
+            console.error(error)
+            reject(0)
+          }
+
+          // calculate a balance
+          balance = balance.div(10 ** decimals).toNumber();
+          resolve(balance);
+        });
+      });
+    });
+
+
+    return promise;
   }
 }
