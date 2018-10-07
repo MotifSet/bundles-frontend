@@ -19,8 +19,8 @@ export default class Landing extends React.Component {
           <ColorBlock width={1} p={2}>
             <Flex>
               <Box pt={[4,5]} mx={'auto'} css={{textAlign: 'center'}}>
-                <Heading>Buy and Sell Digital Subjects</Heading>
-                <Text>Primotif allows you to buy shares in (or short) anything </Text>
+                <Heading>The easiest way to invest in global markets</Heading>
+                <Text>Primotif allows you to participate in any market, anywhere</Text>
               </Box>
             </Flex>
           </ColorBlock>
