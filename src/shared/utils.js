@@ -70,23 +70,28 @@ export class Web3Module{
     let contract = this.injectedWeb3.eth.contract(minABI).at(addr);
     let promise = new Promise((resolve, reject) => {
       // Call balanceOf function
-      contract.balanceOf(this.address, (error, balance) => {
-        if (error){
-          console.error(error)
-          reject(0)
-        }
-        // Get decimals
-        contract.decimals((error, decimals) => {
+      try {
+        contract.balanceOf(this.address, (error, balance) => {
           if (error){
             console.error(error)
             reject(0)
           }
+          // Get decimals
+          contract.decimals((error, decimals) => {
+            if (error){
+              console.error(error)
+              reject(0)
+            }
 
-          // calculate a balance
-          balance = balance.div(10 ** decimals).toNumber();
-          resolve(balance);
+            // calculate a balance
+            balance = balance.div(10 ** decimals).toNumber();
+            resolve(balance);
+          });
         });
-      });
+      } catch(e){
+        console.error(e);
+        reject(0)
+      }
     });
 
 
