@@ -12,7 +12,13 @@ export default class BasketCard extends React.Component {
   }
 
   render(){
-    const {basket} = this.props;
+    const {basket, prices} = this.props;
+
+    let monthly_percent_change;
+    if(prices){
+      monthly_percent_change = (prices[prices.length-1].price - prices[0].price)/prices[0].price;
+      monthly_percent_change = monthly_percent_change.toFixed(2);
+    }
 
     return (
       <CardContainer  width={[1, 1/3]} my={1} mt={[3, 0]}>
@@ -30,15 +36,15 @@ export default class BasketCard extends React.Component {
               left: 0,
               right: 0
             }}>
-              <Sparklines data={this.props.prices} colors={basket.colors} id={basket.id}/>
+              <Sparklines data={prices} colors={basket.colors} id={basket.symbol}/>
             </Box>
             <Box width={1} css={{textAlign: 'center'}} mt={'10.5em'}>
               {basket.description}
             </Box>
             <Box w={1/6} ml={'auto'}>
               <Delta pl={'1em'} value={basket.weekly_percent_change}>
-                <span style={{marginTop: '0.4em'}}>1m</span>
-                <DeltaPill value={basket.weekly_percent_change} p={2}>% {basket.weekly_percent_change}</DeltaPill>
+                <span style={{marginTop: '0.4em'}}>30d</span>
+                <DeltaPill value={monthly_percent_change} p={2}>% {monthly_percent_change}</DeltaPill>
               </Delta>
             </Box>
           </Flex>

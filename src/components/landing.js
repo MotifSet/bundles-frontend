@@ -20,14 +20,14 @@ export default class Landing extends React.Component {
             <Flex>
               <Box pt={[4,5]} mx={'auto'} css={{textAlign: 'center'}}>
                 <Heading>Buy and Sell Digital Subjects</Heading>
-                <Text>Primitif allows you to buy shares in anything </Text>
+                <Text>Primotif allows you to buy shares in (or short) anything </Text>
               </Box>
             </Flex>
           </ColorBlock>
           <Box px={3} css={{backgroundColor: colors.bg}}>
             <Flex mx={'auto'} css={{maxWidth: '1024px'}} flexWrap={'wrap'} mt={[0, -5]}>
-              {baskets.map((b) => (
-                <BasketCard key={b.id} prices={prices[b.id]} basket={b} onClick={this.props.onBasketClick(b.id)}/>
+              {Object.keys(baskets).map((b) => (
+                <BasketCard key={b} prices={prices[baskets[b].symbol]} basket={baskets[b]} onClick={this.props.onBasketClick(b)}/>
               ))}
             </Flex>
           </Box>
@@ -45,5 +45,5 @@ const FullFlex = Flex.extend`
 const ColorBlock = Box.extend`
   height: 45%;
   color: white;
-  background: linear-gradient(180deg, #005C97 0%, rgba(255, 255, 255, 0) 100%), #363795;
+  background: linear-gradient(180deg, #a73737 0%, rgba(255, 255, 255, 0) 100%), #7a2828;
 `;

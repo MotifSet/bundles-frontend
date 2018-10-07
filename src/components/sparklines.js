@@ -25,10 +25,10 @@ export default class Sparklines extends React.Component {
   }
 
   renderSvg(){
-    const {data, colors, id} = this.props;
+    const {data, id} = this.props;
     const {width, height} = this.state.containerDimensions;
 
-    const xSelect = x => new Date(x.timestamp);
+    const xSelect = x => new Date(x.date);
     const ySelect = y => y.price;
 
     const xScale = d3ScaleTime()
@@ -36,7 +36,7 @@ export default class Sparklines extends React.Component {
       .range([0, width])
     ;
     const yScale = d3ScaleLinear()
-      .domain(d3ArrayExtent(data, ySelect))
+      .domain([0, d3ArrayExtent(data, ySelect)[1]*2])
       .range([height/2, 0]);
 
     const selectScaledX = d => xScale(xSelect(d));
@@ -45,7 +45,7 @@ export default class Sparklines extends React.Component {
 
     const sparkline = d3Line().x(selectScaledX).y(selectScaledY);
     const linePath = sparkline(data);
-    const areaPath = d3Area().x(d => xScale(new Date(d.timestamp))).y0(yScale(0)).y1(d => yScale(d.price))(data);
+    const areaPath = d3Area().x(d => xScale(new Date(d.date))).y0(yScale(0)).y1(d => yScale(d.price))(data);
 
     return (
       <svg
@@ -54,13 +54,13 @@ export default class Sparklines extends React.Component {
         style={{display: 'block', marginLeft: 'auto', marginRight: 'auto'}}
       >
         <g>
-          <path d={linePath} fill={"transparent"} stroke={colors[0]} strokeWidth={2}/>
+          <path d={linePath} fill={"transparent"} stroke={'#7a2828'} strokeWidth={2}/>
           <path d={areaPath} fill={`url(#areaGradient${id}`}/>
         </g>
         <defs>
           <linearGradient id={`areaGradient${id}`} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
-            <stop offset={0} stopColor={colors[1]} stopOpacity={0.6}></stop>
-            <stop offset={0.2} stopColor={colors[2]} stopOpacity={0.2}></stop>
+            <stop offset={0} stopColor={'#7a2828'} stopOpacity={0.5}></stop>
+            <stop offset={0.2} stopColor={'#a73737'} stopOpacity={0.1}></stop>
             <stop offset={0.3} stopColor={'white'} stopOpacity={0.0}></stop>
             <stop offset={1} stopColor={'white'} stopOpacity={0.0}></stop>
           </linearGradient>

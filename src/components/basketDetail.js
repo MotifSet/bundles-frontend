@@ -7,7 +7,6 @@ export default class BasketDetail extends React.Component{
         <h1>WASSSUP</h1>
         <span>{this.props.toString()}</span>
       </div>
-
     )
   }
 }

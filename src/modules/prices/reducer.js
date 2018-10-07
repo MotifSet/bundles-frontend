@@ -7,7 +7,7 @@ import {
 function initialState(){
   return {
     loading: {}, // Keys will be basket/asset symbols
-    prices: {} // {[id]: []}
+    prices: {} // {[symbol]: []}
   }
 }
 
