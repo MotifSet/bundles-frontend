@@ -6,6 +6,8 @@ import {
 } from 'd3-scale';
 import { line as d3Line, area as d3Area } from 'd3-shape';
 
+import { colors } from '../shared/theme';
+
 export default class Sparklines extends React.Component {
   constructor(props){
     super(props);
@@ -36,7 +38,7 @@ export default class Sparklines extends React.Component {
       .range([0, width])
     ;
     const yScale = d3ScaleLinear()
-      .domain([0, d3ArrayExtent(data, ySelect)[1]*2])
+      .domain([d3ArrayExtent(data, ySelect)[0]*.75, d3ArrayExtent(data, ySelect)[1]*1.25])
       .range([height/2, 0]);
 
     const selectScaledX = d => xScale(xSelect(d));
@@ -47,6 +49,8 @@ export default class Sparklines extends React.Component {
     const linePath = sparkline(data);
     const areaPath = d3Area().x(d => xScale(new Date(d.date))).y0(yScale(0)).y1(d => yScale(d.price))(data);
 
+    const positive = data[0].price < data[data.length-1].price;
+
     return (
       <svg
         height={height/2}
@@ -54,15 +58,14 @@ export default class Sparklines extends React.Component {
         style={{display: 'block', marginLeft: 'auto', marginRight: 'auto'}}
       >
         <g>
-          <path d={linePath} fill={"transparent"} stroke={'#7a2828'} strokeWidth={2}/>
+          <path d={linePath} fill={"transparent"} stroke={positive ? colors.darkGreen : colors.darkRed} strokeWidth={2}/>
           <path d={areaPath} fill={`url(#areaGradient${id}`}/>
         </g>
         <defs>
           <linearGradient id={`areaGradient${id}`} x1={'0%'} y1={'0%'} x2={'0%'} y2={'100%'}>
-            <stop offset={0} stopColor={'#7a2828'} stopOpacity={0.5}></stop>
-            <stop offset={0.2} stopColor={'#a73737'} stopOpacity={0.1}></stop>
-            <stop offset={0.3} stopColor={'white'} stopOpacity={0.0}></stop>
-            <stop offset={1} stopColor={'white'} stopOpacity={0.0}></stop>
+            <stop offset={0} stopColor={positive ? colors.darkGreen : colors.darkRed} stopOpacity={0.5}></stop>
+            <stop offset={0.2} stopColor={positive ? colors.lightGreen : colors.lightRed} stopOpacity={0.1}></stop>
+            <stop offset={0.3} stopColor={'black'} stopOpacity={0.0}></stop>
           </linearGradient>
         </defs>
       </svg>
