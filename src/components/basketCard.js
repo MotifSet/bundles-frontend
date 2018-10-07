@@ -53,7 +53,7 @@ export default class BasketCard extends React.Component {
               <Text fontSize={'24px'} fontWeight={'bold'}>${basket.price.toFixed(2)}</Text>
             </Box>
             <Box w={1/6} ml={'auto'}>
-              <Delta pl={'1em'} value={basket.weekly_percent_change}>
+              <Delta pl={'1em'} value={monthly_percent_change}>
                 <span style={{marginTop: '0.4em'}}>30d</span>
                 <DeltaPill value={monthly_percent_change} p={2}>% {monthly_percent_change}</DeltaPill>
               </Delta>
@@ -69,11 +69,11 @@ const Delta = styled(Flex)`
   border-radius: 4px;
   justify-content: center;
   color: white;
-  background-color: ${props => props.value > 0 ? `${colors.darkGreen}` : `${colors.darkRed}`};
+  background-color: ${props => props.value >= 0 ? `${colors.darkGreen}` : `${colors.darkRed}`};
 `;
 
 const DeltaPill = styled(Box)`
-  background-color: ${props => props.value > 0 ? `${colors.lightGreen}` : `${colors.lightRed}`};
+  background-color: ${props => props.value >= 0 ? `${colors.lightGreen}` : `${colors.lightRed}`};
   margin-left: 1em; 
   margin-top: 0;
   margin-right: 0;

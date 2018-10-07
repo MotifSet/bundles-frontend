@@ -15,7 +15,9 @@ export const colors = {
   lightRed: 'rgb(223, 72, 87)',
   darkRed: 'rgb(219, 50, 67)',
   blue1: '#227ef7',
-  blue2: '#226EF7'
+  blue2: '#226EF7',
+  green1: '#2BB160',
+  green2: '#269c55'
 };
 
 export function theme(){
